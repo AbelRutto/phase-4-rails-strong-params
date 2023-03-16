@@ -1,10 +1,16 @@
 class BirdsController < ApplicationController
   wrap_parameters format: []
-
+  
   # GET /birds
   def index
     birds = Bird.all
     render json: birds
+  end
+
+  # POST /birds
+  def create
+    bird = Bird.create(params.permit(:name, :species))
+    render json: bird, status: :created
   end
 
   # GET /birds/:id
@@ -17,16 +23,10 @@ class BirdsController < ApplicationController
     end
   end
 
-    # POST /birds
-  def create
-    bird = Bird.create(bird_params)
-    render json: bird, status: :created
-  end
-
   private
+
   def bird_params
     params.permit(:name, :species)
   end
-
 
 end
